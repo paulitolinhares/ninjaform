@@ -107,7 +107,7 @@
         // Handle modal generation (requires bootstrap)
         var generateModal = function(){
           var resultHTML = [];
-          var modalOpen = '<div id="'+ settings.namespace + '-modal" class="modal fade"> <div class="modal-dialog" role="document"> <div class="modal-content"> <div class="modal-body">';
+          var modalOpen = '<div id="'+ settings.namespace + '-modal" class="modal fade"> <div class="modal-dialog" role="document"> <div class="modal-content"> <div class="modal-body"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
           var modalClose = '</div> </div> </div> </div>';
           var form = generateDefaultFields();
 
