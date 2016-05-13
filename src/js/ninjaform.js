@@ -45,13 +45,15 @@
           var flashContainer = '<div class="'+ settings.namespace +'-flashContainer"></div>';
           var formOpen = '<form action="' + settings.actionURL +'" class="' + settings.namespace + '-form">';
           var formClose = '</form>';
-          var nameInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="name" type="text">';
-          var emailInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="email" type="email">';
+          var nameInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="name" type="text" placeholder="Nome">';
+          var emailInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="email" type="email" placeholder="E-mail">';
           var submitButton = '<button class="'+ settings.namespace +'-submit" type="submit">Enviar</button>'
           var customFields = [];
           for(key in options['fields']){
             var fieldArray = options['fields'][key];
             var field = '<select class="' + settings.namespace + '-select ' + formControl + '" name="' + key + '">';
+            // Empty options
+            field += '<option class="' + settings.namespace + '-option" value="">Escolher ' + key + '</option>';
             for(insideKey in fieldArray){
               field += '<option class="' + settings.namespace + '-option" value="' + fieldArray[insideKey] +'">' + fieldArray[insideKey] + '</option>';
             }
