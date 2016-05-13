@@ -1,0 +1,22 @@
+{
+  "name": "ninjaform",
+  "description": "RDStation form generator",
+  "main": "index.js",
+  "authors": [
+    "Paulo Linhares <paulitolinhares@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "RDstation",
+    "form",
+    "JQuery"
+  ],
+  "homepage": "https://github.com/paulitolinhares/ninjaform",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

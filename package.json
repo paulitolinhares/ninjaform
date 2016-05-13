@@ -1,0 +1,24 @@
+{
+  "name": "ninjaform",
+  "version": "1.0.0",
+  "description": "RDStation form generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulitolinhares/ninjaform.git"
+  },
+  "keywords": [
+    "RDstation",
+    "form",
+    "JQuery"
+  ],
+  "author": "Paulo Linhares <paulitolinhares@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulitolinhares/ninjaform/issues"
+  },
+  "homepage": "https://github.com/paulitolinhares/ninjaform#readme"
+}
