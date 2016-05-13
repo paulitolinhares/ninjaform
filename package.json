@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/paulitolinhares/ninjaform/issues"
   },
-  "homepage": "https://github.com/paulitolinhares/ninjaform#readme"
+  "homepage": "https://github.com/paulitolinhares/ninjaform#readme",
+  "dependencies": {
+    "jquery": "^2.2.3"
+  }
 }
