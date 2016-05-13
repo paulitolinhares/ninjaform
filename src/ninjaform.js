@@ -31,7 +31,7 @@
         var settings = $.extend({
           'actionURL': 'https://www.rdstation.com.br/api/1.2/conversions',
           'namespace': 'ninjaform',
-          'fields': [],
+          'fields': {},
           'modal': false,
           'label': true,
           'wrapper': true,
@@ -42,7 +42,7 @@
         var generateDefaultFields = function(){
           var resultHTML = [];
           var formControl = settings.bootstrap == true ? 'form-control' : '';
-          var flashContainer = '<div class="'+ settings.namespace +'-flash"></div>';
+          var flashContainer = '<p class="'+ settings.namespace +'-flash"></p>';
           var formOpen = '<form action="' + settings.actionURL +'" class="' + settings.namespace + '-form">';
           var formClose = '</form>';
           var nameInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="name" type="text">';
@@ -72,7 +72,7 @@
 
             // filling wrappers
             nameInput = openWrapper + nameInput + closeWrapper;
-            emailInput = openWrapper + nameInput + closeWrapper;
+            emailInput = openWrapper + emailInput + closeWrapper;
 
             for(key in customFields){
               customFields[key] = openWrapper + customFields[key] + closeWrapper;
@@ -124,27 +124,25 @@
         };
 
         var validateForm = function($form){
-          var name = $form.find('input[name="name"]').val();
-          var email = $form.find('input[name="name"]').val();
-          if(name.isEmpty || email.isEmpty) return false;
+          var name = $form.find('[name="name"]').val();
+          var email = $form.find('[name="email"]').val();
+          if(name.isEmpty() || email.isEmpty()) return false;
 
           return true;
         };
 
         var initSubmitListener = function(){
           var submitSelector = '.' + settings.namespace + '-submit';
-          console.log('[ninjaform] init submitlistener' + submitSelector);
+          // Remove listeners to avoid double listening
+          $(submitSelector).off('click');
           $(submitSelector).click(function(e){
             e.preventDefault();
-            console.log('submitting');
             var $closestForm = $(this).closest('form');
             if(validateForm($closestForm)){
               submitForm($closestForm);
             }else{
               var $flashContainer = $closestForm.parent().find('.' + settings.namespace + '-flash');
-              console.log('error on validation');
-              console.log($flashContainer);
-              $flashContainer.addClass('error');
+              $flashContainer.addClass('bg-danger');
               $flashContainer.text('Verifique os erros no formulário');
             }
             
@@ -154,28 +152,29 @@
         var submitForm = function($form){
           var leadData = $form.serializeObject();
           var $flashContainer = $form.parent().find('.' + settings.namespace + '-flash');
-          console.log($flashContainer);
+          var postData = {
+            'token_rdstation': settings.token,
+            'secret': settings.secret,
+            'name': leadData.name,
+            'email': leadData.email
+            // 'lead': leadData
+          };
+          // adding custom fields to the post data
+          for(key in settings.fields){
+            var fieldValue = $form.find('[name="' + key + '"] option:selected').val();
+            postData[key] = fieldValue;
+          }
+
+          // console.log(postData);
           $.post({
             'url': $form.attr('action'),
-            'data': {
-              'token_rdstation': settings.token,
-              'secret': settings.secret,
-              'name': leadData.name,
-              'email': leadData.email
-              // 'lead': leadData
-            },
+            'data': postData,
             'success': function(data){
-              // TODO make success flash
-              $flashContainer.addClass('success');
+              $flashContainer.addClass('bg-success');
               $flashContainer.text('Formulário enviado com sucesso');
-              console.log('success');
-              console.log(data);
             },
             'error': function(jqXHR, textStatus, errorThrown){
-              // TODO make error flash
-              console.log('error');
-              console.log(errorThrown);
-              $flashContainer.addClass('error');
+              $flashContainer.addClass('bg-danger');
               $flashContainer.text('Erro ao enviar formulário');
             }
           });
@@ -192,7 +191,6 @@
           return result;
         }else{
           // Modal behavior
-          console.log('generating modal')
           var modalHTML = generateModal();
           $('body').append(modalHTML);
           initSubmitListener();

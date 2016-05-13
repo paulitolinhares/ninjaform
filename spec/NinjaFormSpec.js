@@ -68,8 +68,8 @@ describe('NinjaForm', function () {
     var options;
     beforeAll(function(){
       options = { 
-        'token':'62bb61431348e22850828a5829c4373faafe29c1',
-        'secret':'51a266c2844ccd5cac83d88de88d82d05358aa51', 
+        'token':'93b98d24dcefe654d330b0b791e2ca5d',
+        'secret':'7838a8f11115002fbf1c056511452388', 
         'modal':true, 
         'fields':{ 
           'estado':['PR','SC','SP','RS'], 
