@@ -32,28 +32,53 @@
           'actionURL': 'https://www.rdstation.com.br/api/1.2/conversions',
           'namespace': 'ninjaform',
           'fields': [],
-          'modal': false
+          'modal': false,
+          'label': true,
+          'wrapper': true,
+          'bootstrap': true
         }, options);
 
         // Generate default fields
         var generateDefaultFields = function(){
           var resultHTML = [];
-          var flashContainer = '<div class='+ settings.namespace +'-flash></div>';
+          var formControl = settings.bootstrap == true ? 'form-control' : '';
+          var flashContainer = '<div class="'+ settings.namespace +'-flash"></div>';
           var formOpen = '<form action="' + settings.actionURL +'" class="' + settings.namespace + '-form">';
           var formClose = '</form>';
-          var nameInput = '<input class="' + settings.namespace + '-input" name="name" type="text">';
-          var emailInput = '<input class="' + settings.namespace + '-input" name="email" type="email">';
+          var nameInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="name" type="text">';
+          var emailInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="email" type="email">';
           var submitButton = '<button class="'+ settings.namespace +'-submit" type="submit">Enviar</button>'
           var customFields = [];
           for(key in options['fields']){
             var fieldArray = options['fields'][key];
-            var field = '<select class="' + settings.namespace + '-select" name="' + key + '">';
+            var field = '<select class="' + settings.namespace + '-select ' + formControl + '" name="' + key + '">';
             for(insideKey in fieldArray){
               field += '<option class="' + settings.namespace + '-option" value="' + fieldArray[insideKey] +'">' + fieldArray[insideKey] + '</option>';
             }
             field += "</select>";
             customFields.push(field);
           }
+
+          // Create wrappers
+          if(settings.wrapper){
+            var openWrapper;
+            var closeWrapper = '</div>';
+            // Use bootstrap classes on the wrappers
+            if (settings.bootstrap) {
+              openWrapper = '<div class="'+ settings.namespace +'-wrapper form-group">';
+            }else{
+              openWrapper = '<div class="'+ settings.namespace +'-wrapper">';
+            }
+
+            // filling wrappers
+            nameInput = openWrapper + nameInput + closeWrapper;
+            emailInput = openWrapper + nameInput + closeWrapper;
+
+            for(key in customFields){
+              customFields[key] = openWrapper + customFields[key] + closeWrapper;
+            }
+          }
+
           // pushing elements into the result array
           resultHTML.push(flashContainer);
           resultHTML.push(formOpen);
