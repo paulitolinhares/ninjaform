@@ -29,7 +29,7 @@ describe('NinjaForm', function () {
     });
 
     it('should generate flash container', function(){
-      var flashCount = $('#integration_form .ninjaform-flash').length;
+      var flashCount = $('#integration_form .ninjaform-flashContainer').length;
       expect(flashCount).toEqual(1);
     });
 
@@ -37,7 +37,7 @@ describe('NinjaForm', function () {
       $('#integration_form input[name="name"]').val('');
       $('#integration_form input[name="email"]').val('');
       $('#integration_form .ninjaform-submit').click();
-      var flashText = $('#integration_form .ninjaform-flash').text();
+      var flashText = $('#integration_form .ninjaform-flashContainer').text();
       expect(flashText).toMatch("Verifique os erros no formulário");
     });
   });

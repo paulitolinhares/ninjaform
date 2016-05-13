@@ -42,7 +42,7 @@
         var generateDefaultFields = function(){
           var resultHTML = [];
           var formControl = settings.bootstrap == true ? 'form-control' : '';
-          var flashContainer = '<p class="'+ settings.namespace +'-flash"></p>';
+          var flashContainer = '<div class="'+ settings.namespace +'-flashContainer"></div>';
           var formOpen = '<form action="' + settings.actionURL +'" class="' + settings.namespace + '-form">';
           var formClose = '</form>';
           var nameInput = '<input class="' + settings.namespace + '-input ' + formControl + '" name="name" type="text">';
@@ -136,14 +136,15 @@
           // Remove listeners to avoid double listening
           $(submitSelector).off('click');
           $(submitSelector).click(function(e){
+            console.log('click')
             e.preventDefault();
             var $closestForm = $(this).closest('form');
             if(validateForm($closestForm)){
               submitForm($closestForm);
             }else{
-              var $flashContainer = $closestForm.parent().find('.' + settings.namespace + '-flash');
-              $flashContainer.addClass('bg-danger');
-              $flashContainer.text('Verifique os erros no formulário');
+              console.log('form not valid');
+              var $flashContainer = $closestForm.parent().find('.' + settings.namespace + '-flashContainer');
+              $flashContainer.html('<div class="alert alert-danger ' + settings.namespace + '"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Verifique os erros no formulário</div>');
             }
             
           });
@@ -170,12 +171,10 @@
             'url': $form.attr('action'),
             'data': postData,
             'success': function(data){
-              $flashContainer.addClass('bg-success');
-              $flashContainer.text('Formulário enviado com sucesso');
+              $flashContainer.html('<div class="alert alert-success ' + settings.namespace + '"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Formulário enviado com sucesso</div>');
             },
             'error': function(jqXHR, textStatus, errorThrown){
-              $flashContainer.addClass('bg-danger');
-              $flashContainer.text('Erro ao enviar formulário');
+              $flashContainer.html('<div class="alert alert-danger ' + settings.namespace + '"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Erro ao enviar formulário</div>');
             }
           });
         };
